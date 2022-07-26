@@ -3,14 +3,12 @@ const mongoose = require('mongoose')
 const OrderSchema = new mongoose.Schema(
   {
     status: {
-      // Array of strings
       type: String,
       required: true,
-      enum: ['A traiter', 'Archivé'],
+      enum: ['a traiter', 'archive'],
     },
-    ArchivedDate: {
+    requestDate: {
       type: Date,
-      required: true,
       min: '2022-01-01',
       max: '2100-01-01',
     },

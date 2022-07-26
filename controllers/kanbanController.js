@@ -26,7 +26,7 @@ const getKanban = asyncHandler(async (req, res, next) => {
   res.status(200).json({ success: true, data: kanban })
   if (!kanban) {
     return next(
-      new ErrorResponse(`Plastic type not found with id of ${req.params.id}`, 404),
+      new ErrorResponse(`kanban not found with id of ${req.params.id}`, 404),
     )
   }
 })

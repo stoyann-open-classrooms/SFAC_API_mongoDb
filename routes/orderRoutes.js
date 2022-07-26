@@ -2,7 +2,7 @@ const express = require('express')
 const router = express.Router()
 
 //controllers
-const { createOrder, getOrders, getOrder, updateOrder } = require('../controllers/orderController')
+const { createOrder, getOrders, getOrder, updateOrder, deleteOrder } = require('../controllers/orderController')
 
 
 
@@ -11,6 +11,6 @@ router
   .route('/:id')
   .get(getOrder)
   .put( updateOrder)
-  .delete( deleteOrder)
+  .delete(deleteOrder)
 
 module.exports = router

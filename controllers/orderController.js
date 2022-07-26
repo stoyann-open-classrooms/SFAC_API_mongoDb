@@ -23,7 +23,7 @@ const getOrders = asyncHandler(async (req, res, next) => {
 
 const getOrder = asyncHandler(async (req, res, next) => {
   const order = await Order.findById(req.params.id)
-  res.status(200).json({ success: true, data: kanban })
+  res.status(200).json({ success: true, data: order })
   if (!order) {
     return next(
       new ErrorResponse(`Order not found with id of ${req.params.id}`, 404),

@@ -27,17 +27,15 @@ app.use('/public/upload', express.static('./public/upload'))
 app.use(express.urlencoded({ extended: false }))
 
 //Root URL
-app.get('/', (req, res) => {
-  res.status(200).send({ message: `Bienvenue sur l'api de la SFAC` })
+app.get('/kanban/api/v1', (req, res) => {
+  res.status(200).send({ message: `Bienvenue sur l'api kanban V1` })
 })
 
 // Routes
-app.use('/products', require('./routes/productRoutes'))
-app.use('/kanbans', require('./routes/kanbanRoutes'))
-app.use('/requests', require('./routes/requestRoutes'))
-// app.use('/orders', require('./routes/orderRoutes'))
-
-
+app.use('/kanban/api/v1/products', require('./routes/productRoutes'))
+app.use('/kanban/api/v1/kanbans', require('./routes/kanbanRoutes'))
+app.use('/kanban/api/v1/requests', require('./routes/requestRoutes'))
+app.use('/kanban/api/v1/orders', require('./routes/orderRoutes'))
 
 // ==== Start server
 app.listen(PORT, () =>

@@ -1,23 +1,23 @@
 const mongoose = require('mongoose')
 const slugify = require('slugify');
 
-
 const OrderSchema = new mongoose.Schema(
   {
     orderNumber: {
       type: String,
       required: [true, "Merci d'entrer un numero de commande"],
-      maxlength: [50, 'Name can not be more than 50 characters'],
+      maxlength: [20, 'Le numéro de commande doit contenir au maximum 20 caractères'],
     },
-
     quantity: {
       type: Number,
     },
+    orderDays: {
+      type: Number,
+    },
     status: {
-      // Array of strings
       type: String,
       required: true,
-      enum: ["Fournisseur", "En cours", "Reçue"],
+      enum: [ 'traitement fournisseur','depart fournisseur', 'en cours', 'livree' ],
     },
     orderDate: {
       type: Date,
@@ -44,5 +44,15 @@ OrderSchema.pre('save', function (next) {
   this.slug = slugify(this.orderNumber, { lower: true })
   next()
 })
+// Calcule le nombre de jours ecouler depuis la demande
+OrderSchema.pre('save', function (next) {
+   this.orderDays = Math.round(
+    (Date.now() - new Date(this.orderDate).getTime()) /
+      (1000 * 3600 * 24),
+  )
+  next()
+})
 
-module.exports = mongoose.model('Order', OrderSchema)
+
+
+module.exports =    mongoose.models.Order || mongoose.model('Order', OrderSchema);

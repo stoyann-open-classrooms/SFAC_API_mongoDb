@@ -3,6 +3,7 @@ const slugify = require('slugify')
 
 const ProductSchema = new mongoose.Schema(
   {
+    slug: String,
     image: {
       type: String,
       required: [true, 'Vous devez charger un logo ou une photo de profil'],
@@ -10,22 +11,22 @@ const ProductSchema = new mongoose.Schema(
     designation: {
       type: String,
       required: [true, "Merci d'entrer un nom de produit"],
-      unique: true,
       trim: true,
-      maxlength: [50, 'Name can not be more than 50 characters'],
+      maxlength: [50, 'Le nom doit contenir au maximum 50 caractères'],
     },
     refference: {
       type: String,
       required: [true, "Merci d'entrer une refference"],
       unique: true,
       trim: true,
-      maxlength: [10, 'Name can not be more than 50 characters'],
+      maxlength: [10, 'La refference doit contenir au maximum 10 caractères'],
     },
-    slug: String,
     rupture: Boolean,
+    
     stock: {
       type: Number,
-      required: true,
+      default:0
+
     },
   },
   { timestamps: true },
@@ -33,12 +34,12 @@ const ProductSchema = new mongoose.Schema(
 
 // Create  order slug from the order number
 ProductSchema.pre('save', function (next) {
-  this.slug = slugify(this.deliveryDate, { lower: true })
+  this.slug = slugify(this.refference, { lower: true })
   next()
 })
 // Create boolean rupture stock
 ProductSchema.pre('save', function (next) {
- if(this.stock  <= 0 ){
+ if(this.stock  === 0 ){
     this.rupture = true
 } else {
     this.rupture = false 
