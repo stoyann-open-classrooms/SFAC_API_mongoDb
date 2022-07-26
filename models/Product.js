@@ -4,9 +4,12 @@ const slugify = require('slugify')
 const ProductSchema = new mongoose.Schema(
   {
     slug: String,
+  
     image: {
       type: String,
       required: [true, 'Vous devez charger un logo ou une photo de profil'],
+      default: 'no-photo'
+      
     },
     designation: {
       type: String,

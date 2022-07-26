@@ -1,7 +1,9 @@
 // ==== Dependances
 const asyncHandler = require('express-async-handler')
 
-
+// image Upload dependence
+const multer = require("multer");
+const path = require("path");
 // ==== Models
 const Product = require('../models/Product');
 
@@ -76,8 +78,39 @@ const deleteProduct = asyncHandler(async (req, res, next) => {
   res.status(200).json({ success: true, data: {} })
 })
 
+
+
+// // =========================== UPLOAD IMAGE CONTROLLER ========================================
+
+const im = "product_";
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, "public/upload");
+  },
+  filename: (req, file, cb) => {
+    cb(null, im + Date.now() + path.extname(file.originalname));
+  },
+});
+
+const upload = multer({
+  storage: storage,
+  limits: { fileSize: "1000000" },
+  fileFilter: (req, file, cb) => {
+    const fileTypes = /jpeg|jpg|png|gif/;
+    const mimeType = fileTypes.test(file.mimetype);
+    const extname = fileTypes.test(path.extname(file.originalname));
+
+    if (mimeType && extname) {
+      return cb(null, true);
+    }
+    cb("Le fichier n'est pas doit être au format JPG , JPEG , PNG ou GIF");
+  },
+}).single("image");
+
+
 module.exports = {
    getProduct,
+upload,
    getProducts,
    createProduct, 
    deleteProduct,

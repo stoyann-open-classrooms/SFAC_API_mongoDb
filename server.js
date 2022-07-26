@@ -3,7 +3,7 @@ const express = require('express')
 const connectDB = require('./config/db')
 const cors = require('cors')
 const colors = require('colors')
-
+const fileupload =require('express-fileupload')
 const morgan = require('morgan')
 const dotenv = require('dotenv').config()
 
@@ -21,8 +21,8 @@ app.use(
   }),
 )
 // ===============================================static Images Folder
-app.use('/public/upload', express.static('./public/upload'))
-
+// app.use('/public/upload', express.static('./public/upload'))
+app.use(fileupload())
 // ==== Routes
 app.use(express.urlencoded({ extended: false }))
 

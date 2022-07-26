@@ -6,7 +6,7 @@ const asyncHandler = require('express-async-handler')
 const Kanban = require('../models/Kanban');
 
 // @ description GET all kanban
-//@routes  GET /api/v1/kanban
+//@routes  GET kanban/api/v1/anbans
 //@access   Public
 
 
@@ -18,7 +18,7 @@ const getKanbans = asyncHandler(async (req, res, next) => {
 })
 
 // @ description GET single bootcamps
-//@routes  GET /api/v1/bootcamps/:id
+//@routes  GET kanban/api/v1/:id
 //@access   Public
 
 const getKanban = asyncHandler(async (req, res, next) => {
@@ -32,8 +32,8 @@ const getKanban = asyncHandler(async (req, res, next) => {
 })
 
 // @ description  create new bootcamp
-//@routes  POST /api/v1/bootcamps/:id
-//@access   Private
+//@routes  POST kanban/api/v1/:id
+//@access   Public
 
 const createKanban = asyncHandler(async (req, res, next) => {
   const kanban = await Kanban.create(req.body)
@@ -44,8 +44,8 @@ const createKanban = asyncHandler(async (req, res, next) => {
 })
 
 // @ description  update kanban
-//@routes  PUT /api/v1/kanbans/:id
-//@access   Private
+//@routes  PUT kanban/api/v1/:id
+//@access   Public
 
 const updateKanban = asyncHandler(async (req, res, next) => {
   const kanban = await Kanban.findByIdAndUpdate(req.params.id, req.body, {
@@ -62,8 +62,8 @@ const updateKanban = asyncHandler(async (req, res, next) => {
 })
 
 // @ description  delete  new kanban
-//@routes  DELETE /api/v1/kanbans/:id
-//@access   Private
+//@routes  DELETE kanban/api/v1/:id
+//@access   Public
 
 const deleteKanban = asyncHandler(async (req, res, next) => {
   const kanban = await Kanban.findByIdAndDelete(req.params.id)

@@ -1,24 +1,21 @@
 // ==== Dependances
 const asyncHandler = require('express-async-handler')
 
-
 // ==== Models
-const Order = require('../models/Order');
+const Order = require('../models/Order')
 
 // @ description GET all orders
-//@routes  GET /api/v1/orders
+//@routes  GET kanban/api/v1/orders
 //@access   Public
 
-
 const getOrders = asyncHandler(async (req, res, next) => {
-  const orders = await Order.find()
-  res
-    .status(200)
-    .json({ success: true, count: orders.length, data: orders })
+ console.log(req.query);
+  const orders = await Order.find(req.query)
+  res.status(200).json({ success: true, count: orders.length, data: orders })
 })
 
-// @ description GET single bootcamps
-//@routes  GET /api/v1/bootcamps/:id
+// @ description GET single order
+//@routes  GET kanban/api/v1/orders/:id
 //@access   Public
 
 const getOrder = asyncHandler(async (req, res, next) => {
@@ -31,8 +28,8 @@ const getOrder = asyncHandler(async (req, res, next) => {
   }
 })
 
-// @ description  create new bootcamp
-//@routes  POST /api/v1/bootcamps/:id
+// @ description  create new order
+//@routes  POST kanban/api/v1/orders/:id
 //@access   Private
 
 const createOrder = asyncHandler(async (req, res, next) => {
@@ -43,8 +40,8 @@ const createOrder = asyncHandler(async (req, res, next) => {
   })
 })
 
-// @ description  update kanban
-//@routes  PUT /api/v1/kanbans/:id
+// @ description  update order
+//@routes  PUT  kanban/api/v1/orders/:id
 //@access   Private
 
 const updateOrder = asyncHandler(async (req, res, next) => {
@@ -61,8 +58,8 @@ const updateOrder = asyncHandler(async (req, res, next) => {
   res.status(200).json({ success: true, data: order })
 })
 
-// @ description  delete  new kanban
-//@routes  DELETE /api/v1/kanbans/:id
+// @ description  delete order
+//@routes  DELETE  kanban/api/v1/orders/:id
 //@access   Private
 
 const deleteOrder = asyncHandler(async (req, res, next) => {
@@ -77,11 +74,9 @@ const deleteOrder = asyncHandler(async (req, res, next) => {
 })
 
 module.exports = {
-   getOrder,
-   getOrders,
-   createOrder, 
-   deleteOrder,
-   updateOrder
-    
-  }
-  
+  getOrder,
+  getOrders,
+  createOrder,
+  deleteOrder,
+  updateOrder,
+}
