@@ -2,18 +2,21 @@
 const asyncHandler = require('express-async-handler')
 
 // image Upload dependence
+
 const multer = require("multer");
 const path = require("path");
+
 // ==== Models
 const Product = require('../models/Product');
+
+
 
 // @ description GET all orders
 //@routes  GET /api/v1/orders
 //@access   Public
 
-
 const getProducts = asyncHandler(async (req, res, next) => {
-  const products = await Product.find()
+  const products = await Product.find(req.query)
   res
     .status(200)
     .json({ success: true, count: products.length, data: products })
@@ -38,7 +41,12 @@ const getProduct = asyncHandler(async (req, res, next) => {
 //@access   Private
 
 const createProduct = asyncHandler(async (req, res, next) => {
-  const product = await Product.create(req.body)
+  const { refference, designation } = req.body
+  const product = await Product.create({
+    image : req.file.path,
+    refference: refference,
+    designation: designation,
+  })
   res.status(201).json({
     success: true,
     data: product,
@@ -103,14 +111,14 @@ const upload = multer({
     if (mimeType && extname) {
       return cb(null, true);
     }
-    cb("Le fichier n'est pas doit être au format JPG , JPEG , PNG ou GIF");
+    cb("Le fichier doit être au format JPG , JPEG , PNG ou GIF");
   },
 }).single("image");
 
 
 module.exports = {
    getProduct,
-upload,
+   upload,
    getProducts,
    createProduct, 
    deleteProduct,

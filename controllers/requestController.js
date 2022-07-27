@@ -11,7 +11,7 @@ const Request = require('../models/Request');
 
 
 const getRequests = asyncHandler(async (req, res, next) => {
-  const requests = await Request.find()
+  const requests = await Request.find(req.query)
   res
     .status(200)
     .json({ success: true, count: requests.length, data: requests })

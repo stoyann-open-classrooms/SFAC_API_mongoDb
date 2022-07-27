@@ -4,12 +4,11 @@ const slugify = require('slugify')
 const ProductSchema = new mongoose.Schema(
   {
     slug: String,
-  
+
     image: {
       type: String,
       required: [true, 'Vous devez charger un logo ou une photo de profil'],
-      default: 'no-photo'
-      
+      default: 'public\\upload\\no-photo',
     },
     designation: {
       type: String,
@@ -25,11 +24,10 @@ const ProductSchema = new mongoose.Schema(
       maxlength: [10, 'La refference doit contenir au maximum 10 caractères'],
     },
     rupture: Boolean,
-    
+
     stock: {
       type: Number,
-      default:0
-
+      default: 0,
     },
   },
   { timestamps: true },
@@ -42,11 +40,11 @@ ProductSchema.pre('save', function (next) {
 })
 // Create boolean rupture stock
 ProductSchema.pre('save', function (next) {
- if(this.stock  === 0 ){
+  if (this.stock === 0) {
     this.rupture = true
-} else {
-    this.rupture = false 
- }
+  } else {
+    this.rupture = false
+  }
   next()
 })
 
