@@ -9,7 +9,9 @@ const KanbanSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Product',
     },
+
     slug: String,
+   
     uid_nfc: {
       type: String,
       required: [true, "Vous devez rentrer un identifiant pour ce kanban."],

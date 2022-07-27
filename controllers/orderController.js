@@ -10,7 +10,7 @@ const Order = require('../models/Order')
 //@access   Public
 
 const getOrders = asyncHandler(async (req, res, next) => {
- console.log(req.query);
+
   const orders = await Order.find(req.query)
   res.status(200).json({ success: true, count: orders.length, data: orders })
 })
